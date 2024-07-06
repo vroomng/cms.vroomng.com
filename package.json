@@ -1,5 +1,5 @@
 {
-  "name": "cms-beta",
+  "name": "cms",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:CMS_beta": "node dist/cms-beta/server/server.mjs"
+    "serve:ssr:CMS_beta": "node dist/cms/server/server.mjs"
   },
   "private": true,
   "dependencies": {
