@@ -1,0 +1,36 @@
+<app-loader *ngIf="!dashboard"></app-loader>
+<div class="dashboard w-full h-full">
+    <div class="w-full flex h-[40%] flex-wrap  justify-center px-4 ">
+        <div *ngFor="let dashboard of dashboard" class=" w-[15%] mt-4 mx-[10px]  " >
+        <div class="card w-full h-[120px]   flex items-center justify-center bg-[#F8FAFC] hover:bg-[#28094F]">
+            <div class=" w-[90%] h-[80%] flex flex-col items-start justify-center group hover:text-white ">
+                <div class="flex items-center pb-3">
+                    <span *ngIf="dashboard.name === 'RIDERS'"><i class="fa-solid fa-users "></i> </span>
+                    <span *ngIf="dashboard.name === 'DRIVERS'"><i class="fa-solid fa-taxi"></i></span>
+                    <span *ngIf="dashboard.name === 'ADMIN'"><i class="fa-solid fa-user "></i></span>
+                    <span *ngIf="dashboard.name === 'VEHICLES'">  <i class="fa-solid fa-truck-monster "></i></span>
+                    <span *ngIf="dashboard.name === 'TRIPS'">   <i class="fa-solid fa-person-walking-luggage"></i></span>
+                    <span *ngIf="dashboard.name === 'COMPLETED TRIPS'">   <i class="fa-solid fa-plane-arrival"></i></span>
+                    <span *ngIf="dashboard.name === 'TOTAL TRIPS PAYMENT'">   <i class="fa-solid fa-money-bill-transfer"></i></span>
+                    <span *ngIf="dashboard.name === 'TOTAL TRIPS COMMISSION'">   <i class="fa-solid fa-piggy-bank"></i></span>
+                    <span *ngIf="dashboard.name === 'TOTAL DRIVERS EARNED'">   <i class="fa-solid fa-road"></i></span>
+                   
+                    <span class="title mx-2 text=[#28094F] font-medium text-[14px] uppercase ">{{dashboard.name}}</span>
+                    
+                </div> 
+                <span class="suntitle text=[#28094F] font-medium text-[18px] ">{{dashboard.data}}</span>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="footer absolute w-full h-[55%] bg-[#F3F5FB] " *ngIf="dashboard" >
+        <div class="container w-[100%] h-full flex absolute flex justify-center items-center">
+            <div class="card w-[90%] h-[90%] bg-gray-200">
+                <p-chart type="bar" [data]="chart_data" [options]="options"></p-chart> 
+            </div>
+        </div>
+    </div>
+
+</div>
+
