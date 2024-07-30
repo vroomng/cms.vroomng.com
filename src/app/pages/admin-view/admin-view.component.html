@@ -10,7 +10,7 @@
                         <div class="h-[50%] pt-4 w-full flex flex-wrap">
                             <div class="w-[50%]"  >
                                 <h5>Name</h5>
-                                <p> {{ editedAdmin1?.firstname }} {{ editedAdmin1?.lastname }} </p>
+                                <p> {{ editedAdmin1?.user_profile.first_name }} {{ editedAdmin1?.user_profile.last_name }} </p>
                             </div>
                             <div class="w-[50%]">
                                 <h5>Email</h5>
@@ -27,15 +27,7 @@
                             </div>
                             <div class="w-[50%]">
                                 <h5>Role</h5>
-                                <div *ngIf="editedAdmin1?.user_type == '4'">
-                                    <p>Super Admin</p>
-                                </div>
-                                <div *ngIf="editedAdmin1?.user_type == '3'">
-                                    <p>Sub Admin</p>
-                                </div>
-                                <div *ngIf="editedAdmin1?.user_type == '5'">
-                                    <p>Partner</p>
-                                </div>
+                                {{ editedAdmin1?.user_type }}
                             </div>
                             <div class="w-[50%]">
                                 <h5>Last Seen</h5>
@@ -43,14 +35,8 @@
                             </div>
                             <div class="w-[50%]">
                                 <h5>City</h5>
-                                <span *ngIf="editedAdmin1?.city === '' ">
-                                    <p>City Not Selected</p>
-                                </span>
-                                <span *ngIf="editedAdmin1?.city === null ">
-                                    <p>City Not Selected</p>
-                                </span>
                                 <p>
-                                    {{ editedAdmin1?.city }}
+                                    {{ editedAdmin1?.user_profile.city }}
                                 </p>
                             </div>
                         </div>
@@ -100,10 +86,11 @@
                                 
                                     <td>
                                         <span class="flex items-center"> 
-                                            <img 
+                                            <!-- <img 
                                             [src]="admins.user_profile.profile_url || 'https://i.pinimg.com/736x/07/33/ba/0733ba760b29378474dea0fdbcb97107.jpg' " 
                                             class="w-8 rounded-full" 
-                                            alt="dp">
+                                            alt="dp"> -->
+                                            <img src="./user.png" class="w-8 rounded-full" alt="dp">
                                            <span class="capitalize flex flex-wrap mx-2">{{admins.user_profile.first_name}} {{admins.user_profile.last_name}}</span> 
                                         </span>
                                     </td>

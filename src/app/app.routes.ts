@@ -15,6 +15,12 @@ import { DriversEditComponent } from './pages/drivers-edit/drivers-edit.componen
 import { DriversAddComponent } from './pages/drivers-add/drivers-add.component';
 import { RidersAddComponent } from './pages/riders-add/riders-add.component';
 import { RidersEditComponent } from './pages/riders-edit/riders-edit.component';
+import { TripMenuComponent } from './pages/trip-menu/trip-menu.component';
+import { VehiclesMenuComponent } from './pages/vehicles-menu/vehicles-menu.component';
+import { RatingsMenuComponent } from './pages/ratings-menu/ratings-menu.component';
+import { QuestsMenuComponent } from './pages/quests-menu/quests-menu.component';
+import { AccessControlComponent } from './pages/access-control/access-control.component';
+import { AppActionsComponent } from './pages/app-actions/app-actions.component';
 
 export const routes: Routes = [
     {
@@ -46,28 +52,51 @@ export const routes: Routes = [
             canActivate: [authGuard],
           },
 
-          { path: 'add-admin',      component: AdminAddComponent, 
+          { path: 'add-admin', component: AdminAddComponent, 
             canActivate: [authGuard]
-        },
+          },
           { path: 'users/:uuid/edit', component: AdminEditComponent, title:'Edit Admin',  
+            canActivate: [authGuard] },
+
+        { path: 'trips-menu',      component: TripMenuComponent, 
+            canActivate: [authGuard]},
+
+        { path: 'driver/:uuid/edit', component: DriversEditComponent, title:'Edit Driver', 
+             canActivate: [authGuard]
+         },
+         { 
+            path: 'add-driver',      component: DriversAddComponent, 
+           canActivate: [authGuard]
+        },
+
+        {
+            path: 'add-rider',      component: RidersAddComponent,
             canActivate: [authGuard]
         },
-          { path: 'driver/:uuid/edit', component: DriversEditComponent, title:'Edit Driver', 
-             canActivate: [authGuard]
-            },
+        { path: 'rider/:uuid/edit', component: RidersEditComponent, title:'Edit Rider',  
+           canActivate: [authGuard]
+        },
+        { 
+          path: 'vehicles-menu', component: VehiclesMenuComponent,  
+          canActivate: [authGuard]
+        },
+        { 
+          path: 'ratings-menu', component: RatingsMenuComponent,  
+          canActivate: [authGuard]
+        },
+        { 
+          path: 'quest-menu', component: QuestsMenuComponent,  
+          canActivate: [authGuard]
+        },
+        { 
+          path: 'access-control', component: AccessControlComponent,  
+          canActivate: [authGuard]
+        },
+        { 
+          path: 'app-actions-menu', component: AppActionsComponent,  
+          canActivate: [authGuard]
+        },
 
-            { path: 'add-driver',      component: DriversAddComponent, 
-                canActivate: [authGuard]
-            },
-
-            {
-                path: 'add-rider',      component: RidersAddComponent,
-                    canActivate: [authGuard]
-            
-            },
-            { path: 'rider/:uuid/edit', component: RidersEditComponent, title:'Edit Rider',  
-                canActivate: [authGuard]
-            },
 
 
 

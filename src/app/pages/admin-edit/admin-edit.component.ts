@@ -90,11 +90,12 @@ export class AdminEditComponent implements OnInit {
   }
 
 
-
+  profile_url:any;
 
   updateUser() {
 
    this.showAlert = true;
+   this.inSubmission = true;
 
     var editAdminForm = {
       first_name: this.admins.user.user_profile.first_name,
@@ -110,21 +111,26 @@ export class AdminEditComponent implements OnInit {
 
     this.updateAdmin(editAdminForm, this.adminId).subscribe({
       next: (res:any) => {
-
         console.log(res)
-     if(res.success === 'true'){
-      alert(res.data.message)
+       if(res.success === 'true'){
+        alert(res.data.message)
+        this.inSubmission = false;
      
-      setTimeout(() => {
-        const currentUrl = this.router.url;
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate([currentUrl]);
-        });
-      }, 1000);
+        setTimeout(() => {
+          const currentUrl = this.router.url;
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate([currentUrl]);
+          });
+        }, 1000);
 
      } else {
       alert(res.data.message)
+      this.inSubmission = false
      }
+      },
+      error: (err:any) => {
+        console.log('error occured',err);
+        this.inSubmission = false
       }
     })
    
@@ -139,12 +145,10 @@ export class AdminEditComponent implements OnInit {
   }
 
   deleteUser() {
-      window.alert('are you sure?');
+     
       const adminId = this.adminId;
       console.log(adminId)
-      // this.displayDialog = true;
-     
-        this.deleteAdmin(adminId).subscribe((res:any) => {
+      this.deleteAdmin(adminId).subscribe((res:any) => {
           console.log(res);
 
           if(res.success == true){
@@ -154,6 +158,9 @@ export class AdminEditComponent implements OnInit {
             alert(res.data.message)
           }
         })
+        
+
+       
     
     }
 
@@ -173,6 +180,16 @@ export class AdminEditComponent implements OnInit {
   
     hideModal() {
       this.displayDialog = !this.displayDialog;
+    }
+
+    onFileSelected(event: any) {
+      const file: File = event.target.files[0];
+      this.profile_url.setValue(file); // Update the form control with the selected file
+    }
+    
+
+    onRemoveImage() {
+      this.profile_url = null;
     }
 
 }

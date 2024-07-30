@@ -171,6 +171,10 @@ this.isModalVisible = !this.isModalVisible
       this.isModalVisible = false;
     }
   
+    onFileSelected(event: any) {
+      const file: File = event.target.files[0];
+      // this.licence_docu.setValue(file); // Update the form control with the selected file
+    }
 
     
 

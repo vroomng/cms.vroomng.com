@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from '../../components/shared/loader/loader.component';
 import { VRInputComponent } from '../../components/shared/vr-input/vr-input.component';
+import { CommonModule } from '@angular/common';
 
 interface City {
   name: string;
@@ -26,7 +27,7 @@ interface Users {
   templateUrl: './admin-add.component.html',
   styleUrls: ['./admin-add.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ButtonComponent, ModalComponent, VRInputComponent, LoaderComponent]
+  imports: [FormsModule, HttpClientModule, ReactiveFormsModule, CommonModule, ReactiveFormsModule, ButtonComponent, ModalComponent, VRInputComponent, LoaderComponent]
 })
 
 export class AdminAddComponent implements OnInit {
@@ -111,11 +112,12 @@ export class AdminAddComponent implements OnInit {
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)])
   password_confirmation = new FormControl('',[Validators.required, Validators.pattern(
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)])
-  // city = new FormControl(this.cities, [Validators.required, Validators.minLength(3)]) 
-  user_type = new FormControl('admin') 
-  device_token = new FormControl('iuxbybnhm', [Validators.required, Validators.minLength(1)])
-  ref_code = new FormControl('adeife.taiwo')
-  ref_by = new FormControl('Vroomng')
+  profile_url = new FormControl(<any>[ Validators.minLength(0)])
+  city = new FormControl('', [Validators.required, Validators.minLength(3)]) 
+  // user_type = new FormControl('admin') 
+  // device_token = new FormControl('iuxbybnhm', [Validators.required, Validators.minLength(1)])
+  // ref_code = new FormControl('adeife.taiwo')
+  // ref_by = new FormControl('Vroomng')
   
   
   adminForm = new FormGroup({
@@ -125,45 +127,58 @@ export class AdminAddComponent implements OnInit {
     phone_no: this.phone_no,
     password: this.password,
     password_confirmation: this.password_confirmation,
-    // city: this.city,
-    user_type: this.user_type,
-    device_token: this.device_token,
-    ref_code: this.ref_code,
-    ref_by: this.ref_by
+    city: this.city,
+    // user_type: this.user_type,
+    // device_token: this.device_token,
+    // ref_code: this.ref_code,
+    // ref_by: this.ref_by
   })
-
-
 
   // const selectedValue = this.form.get('selectedOption').value;
   submit(){
-     console.log(this.adminForm.value)
-    //  window.alert('in process') 
-    this.showAlert = true
+    
+  console.log(this.adminForm.value)
+     
+  let addAdmin = {
+    ...this.adminForm.value,
+    user_type: 'admin', 
+    device_token: 'vroomxtt1234',
+    ref_code: 'adeife.taiwo',
+    ref_by: 'Vroomng',
+
+    // profile_url: this.profile_url.value.name
+  };
+
+  console.log(addAdmin)
+
+  this.showAlert = true;
+    this.inSubmission = true
     setTimeout(() => {
-      this.showAlert = true
-      this.alertMsg = 'Loading... If sync persists check network'
-      this.alertColor = 'info'
-      this.addAdmin(this.adminForm.value).subscribe(
-        (res:any) => {
-         console.log(res)
-         if(res.success == true){
-          // this.alertMsg = res.message;
-          // this.alertColor = "success"
-          alert(res.data.message)
-         } else {
-          // this.alertMsg = res.message;
-          // this.alertColor = 'danger'
-          alert(res.data.message)
+      this.showAlert = true;
+  
+      this.addAdmin(addAdmin).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.inSubmission = false
+          this.router.navigate(['/users']);
+          if (res.success) {
+            alert(res.data.message);
+          } else {
+            alert(res.data.message);
+            this.inSubmission = false
+          }
+        },
+        error: (err: any) => {
+          console.error('error',err);
+          alert(err.error.data.message);
+          // alert('An error occurred while adding the admin.');
+        }
+      });
+    }, 1000);
+   }
 
-         }
-         }
-        
-      )
-      }, 1600) 
-  }
-
-  addAdmin(adminForm:any){
-    return this.http.post(`${this.baseUrl}/api/admin/user/store`, adminForm)
+  addAdmin(addAdmin:any){
+    return this.http.post(`${this.baseUrl}/api/admin/user/store`, addAdmin)
   }
 
   reset(){
@@ -189,6 +204,13 @@ export class AdminAddComponent implements OnInit {
    hideModal() {
      this.isModalVisible = false;
    }
+
+   onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.profile_url.setValue(file); // Update the form control with the selected file
+    console.log(this.profile_url.value.name)
+  }
+  
 
   
 }

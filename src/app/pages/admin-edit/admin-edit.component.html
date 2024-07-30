@@ -18,6 +18,60 @@
                                 <div class="flex w-full  justify-between h-[auto]">
                                     <div class="w-[48%]">
                                         <div class="form-group">
+                                            <div class="form-group flex">
+                                                <!-- <div class="border-3  w-8 h-8 border-[#28094F] rounded-full">
+                                                   <span *ngIf="profile_url === null || '' "> 
+                                                     <img src="./user.png"/>
+                                                   </span>
+                                                </div> -->
+                                                 
+                                                <!-- <label for="file-upload" class="relative bottom-0 right-0 mb-2 mr-2">
+                                                     <div class="w-8 h-8 bg-brand600 text-white rounded-full flex items-center justify-center cursor-pointer">
+                                                       <i class="fas fa-camera"></i>
+                                                     </div>
+                                                   </label>
+                                                   <input
+                                                     id="file-upload"
+                                                     type="file"
+                                                     class="hidden"
+                                                     (change)="onFileSelected($event)"
+                                                     accept="image/*"
+                                                   /> -->
+                                             </div>
+                                        </div>
+                                        <!-- <div class="flex  items-center space-y-4">
+                                            <div class="relative">
+                                              <img
+                                                [src]="admins.user.user_profile.profile_url || 'https://via.placeholder.com/150'"
+                                                alt="Profile"
+                                                class="w-32 h-32 rounded-full object-cover"
+                                              />
+                                              <label for="file-upload" class="absolute bottom-0 right-0 mb-2 mr-2">
+                                                <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center cursor-pointer">
+                                                  <i class="fas fa-camera"></i>
+                                                </div>
+                                              </label>
+                                              <input
+                                                id="file-upload"
+                                                type="file"
+                                                class="hidden"
+                                                (change)="onFileSelected($event)"
+                                                accept="image/*"
+                                              />
+                                            </div>
+                                            <button (click)="onRemoveImage()" class="text-sm text-red-500">Remove Image</button>
+                                          </div>
+                                    </div> -->
+                                    </div>
+                                    <div class="w-[48%]">
+                                        <div class="form-group">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex w-full  justify-between h-[auto]">
+                                    <div class="w-[48%]">
+                                        <div class="form-group">
                                             <label>First Name:</label>
                                             <input type="text" id="input-first-name" [(ngModel)]="admins.user.user_profile.first_name" name="firstname"
                                                 class="form-control form-control-alternative" placeholder="First name"
