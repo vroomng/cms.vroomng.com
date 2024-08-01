@@ -6,14 +6,25 @@
         <div class="w-[80vh] h-[65vh] flex items-start justify-center ">
             <div class="h-[95%] w-[95%]">
                 <div class="h-[10%] flex items-center justify-between w-full"> 
-                    <h3 class="h3 text-[#28094F]">Edit Admin</h3>
-                    <button (click)="closeEdit()">
-                        <i class="fa fa-times text-[20px]" aria-hidden="true"></i>
-                    </button>
+                    <div style="width: 50%;">
+                        <h3 class="h3 text-[#28094F] ">Edit {{admins.user.user_type}}</h3>
+                    </div>
+                    <div class="" style="width: 50%; display: flex; justify-content: flex-end;">
+                         <span *ngIf="admins.user.user_type == 'driver'">
+                            <button class=" rounded-sm mx-2 p-2 bg-brand600 hover:bg-brand900 text-white hover:text-brand500" (click)="details()">
+                               <span *ngIf="!driverDtls"> Driver details <i class="fa-solid fa-circle-info"></i></span>
+                               <span *ngIf="driverDtls"> Edit Driver Bio <i class="fa-solid fa-user"></i></span>
+                             </button>
+                         </span>
+                        <button (click)="closeEdit()">
+                            <i class="fa fa-times text-[20px]" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                     
                 </div>
-                <div class="h-[80%] w-full flex  items-start">
+                <div class="h-[80%] w-full flex flex-col  justify-start overflow-y-scroll  ">
                         <app-loader *ngIf="!admins"></app-loader>
-                        <div class="card-body"*ngIf="admins" >       
+                        <div class="card-body"*ngIf="admins && !driverDtls"  >       
                             <form>
                                 <div class="flex w-full  justify-between h-[auto]">
                                     <div class="w-[48%]">
@@ -111,7 +122,7 @@
                                         <div class="form-group">
                                             <label>Password:</label>
                                             <input type="password" id="input-password" name="password" class="form-control form-control-alternative"
-                                                placeholder="****************" readonly="false">
+                                                placeholder="****************" readonly="true">
                                         </div>
                                     </div>
                                     <div class="w-[48%]">
@@ -127,7 +138,7 @@
                                 <div class="flex w-full  justify-between h-[auto]">
                                     <div class="w-[48%]">
                                         <div class="form-group">
-                                            <label>Admin Type:</label>
+                                            <label>User Type:</label>
                                             <input type="text" id="input-admin-type" name="admin_type"
                                                 class="form-control form-control-alternative"
                                                 [(ngModel)]="admins.user.user_type"
@@ -135,25 +146,120 @@
                                                 >
                                         </div>
                                     </div>
-                                    <!-- <div class="w-[48%]">
-                                        <div class="form-group">
-                                            <label>Change Type:</label>
-                                            <select id="user_type" name="user_type" [(ngModel)]="userType" formControlName="user_type" class="form-control form-control-alternative">
-                                                <option *ngFor="let option of userType" [value]="option.code">{{ option.type }}</option>
-                                            </select>
-                                        </div>
-                                    </div> -->
+                                    
                                 </div>
                             </form>   
                         </div>
+                        <app-loader *ngIf="inSubmission"></app-loader>
+                        <span *ngIf="driverDtls && !inSubmission">
+
+                        
+                        <div class="mt-4">
+                            <h4 class="h4 text-[#28094F]">Update Bank Details</h4>
+                        </div>
+                        <div class="flex w-full justify-between h-[auto]">
+                            <div class="w-[49%]">
+                                <label>Account Name:</label>
+                                <input type="text"  name="holder name"  [(ngModel)]="accountInfo.account_name"
+                                class="form-control form-control-alternative" placeholder="Holder Name" value="{{accountInfo.account_name}}">
+                            </div>
+                            <div class="w-[49%]">
+                                <label>Account Number:</label> 
+                                <input type="text" name="account_number"   [(ngModel)]="accountInfo.account_number"
+                                    class="form-control form-control-alternative" placeholder="Account Number" value="{{accountInfo.account_number}}">
+                            </div>
+                        </div>
+                    
+                        
+                        <div class="flex w-full justify-between h-[auto]">
+                            <div class="w-[49%]">
+                                <div class="form-group">
+                                    <label>Bank:</label>
+                                    <label for="banks">Select a bank:</label>
+                                    <select id="banks" (change)="onBankSelect($event)">
+                                      <option value="" disabled selected>--Select a bank--</option>
+                                      <option *ngFor="let bank of banks" [value]="bank.id">
+                                        {{ bank.name }}
+                                      </option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                
+                        </div>
+                        
+               
+                            <div class="mt-4" >
+                                <h4 class="h4 text-[#28094F]">Update Driver Documents</h4>
+                            </div>
+    
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label for="licence_docu">Driver Licence Front:</label>
+                                        <input type="file" (change)="onFileSelected($event)" accept="image/jpeg,image/png,application/pdf" id="licence_docu" name="licence_docu">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="licence_docu"> Driver Licence back :</label>
+                                        <input type="file" (change)="onFileSelected0($event)" accept="image/pdf*" id="licence_docu" name="licence_docu">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="Insurance_docu">Upload Insurance front:</label>
+                                        <input type="file" (change)="onFileSelected1($event)" accept="image/pdf*" id="insurance_docu" name="insurance_docu">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="Insurance_docu">Upload Insurance back:</label>
+                                        <input type="file" (change)="onFileSelected2($event)" accept="image/pdf*" id="insurance_docu" name="insurance_docu">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="multi-docu">Vehicle inspection report:</label>
+                                        <input type="file" (change)="onFileSelected3($event)" accept="image/pdf*" id="vehicle_docu" name="vehicle_docu">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label htmlFor="multi-docu">Other Documents:</label>
+                                        <input type="file" (change)="onFileSelected4($event)" accept="image/pdf*" id="multi_docu" name="multi_docu">
+                                    </div>
+                                </div>
+                            </div>
+
+                                <div class="mt-4"></div>
+                         </span>
+        
+                        
+                        
                 </div> 
+               
                 <div class="h-[10%] w-full flex justify-between">
-                    <div class="btn w-[48%]">
-                        <app-button buttonText="Delete" borderColor="#f01717" bgColor="#f01717" textColor="#FFFFFF" (click)="deleteUser()" ></app-button>
-                    </div>
-                    <div class="btn w-[48%]">      
-                        <app-button buttonText="Update Admin" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="updateUser()"></app-button>            
-                    </div>
+
+                        <div class="btn w-[48%]"  *ngIf="!driverDtls">
+                            <app-button buttonText="Delete" borderColor="#f01717" bgColor="#f01717" textColor="#FFFFFF" (click)="deleteUser()" ></app-button>
+                        </div>
+                        <div class="btn w-[48%]" *ngIf="!driverDtls">      
+                            <app-button  buttonText="Update user" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="updateUser()"></app-button>            
+                        </div>
+                    
+                  
+                        <div class="btn w-[48%]" *ngIf="driverDtls">
+                            <app-button buttonText="Upload Bank Data"  borderColor="#28094F" bgColor="#FFFFFF" textColor="#28094F" (click)="AddBank()" ></app-button>
+                        </div>
+                        <div class="btn w-[48%]" *ngIf="driverDtls">      
+                            <app-button buttonText="Update Documents" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="uploadDocuments()"></app-button>            
+                        </div>
+                 
                 </div>
             </div>
         </div>

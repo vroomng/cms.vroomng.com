@@ -65,9 +65,9 @@
             <!-- pages -->
             <div class="h-[90%]">
                <app-trips [searchText]="searchText" *ngIf="activeIndex === 0"></app-trips>
-               <app-trips [searchText]="searchText" *ngIf="activeIndex === 1"></app-trips>
-               <app-trips [searchText]="searchText" *ngIf="activeIndex === 2"></app-trips>
-               <app-trips [searchText]="searchText" *ngIf="activeIndex === 3"></app-trips>
+               <app-trips-completed [searchText]="searchText" *ngIf="activeIndex === 1"></app-trips-completed>
+               <app-trips-canceled  *ngIf="activeIndex === 3"></app-trips-canceled>
+               <app-trips-ongoing  *ngIf="activeIndex === 2"></app-trips-ongoing>
             </div>
          </div>
     </div>

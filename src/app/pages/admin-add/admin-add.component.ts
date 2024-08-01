@@ -151,7 +151,7 @@ export class AdminAddComponent implements OnInit {
 
   console.log(addAdmin)
 
-  this.showAlert = true;
+   this.showAlert = true;
     this.inSubmission = true
     setTimeout(() => {
       this.showAlert = true;
@@ -160,9 +160,10 @@ export class AdminAddComponent implements OnInit {
         next: (res: any) => {
           console.log(res);
           this.inSubmission = false
-          this.router.navigate(['/users']);
+          
           if (res.success) {
             alert(res.data.message);
+            this.router.navigate(['/users']);
           } else {
             alert(res.data.message);
             this.inSubmission = false
@@ -171,7 +172,6 @@ export class AdminAddComponent implements OnInit {
         error: (err: any) => {
           console.error('error',err);
           alert(err.error.data.message);
-          // alert('An error occurred while adding the admin.');
         }
       });
     }, 1000);

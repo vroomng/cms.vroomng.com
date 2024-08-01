@@ -11,6 +11,7 @@ import { ButtonComponent } from '../../components/shared/button/button.component
 import { Button, ButtonModule } from 'primeng/button';
 import { ModalComponent } from '../../components/shared/modal/modal.component';
 import { LoaderComponent } from '../../components/shared/loader/loader.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-drivers',
@@ -18,9 +19,12 @@ import { LoaderComponent } from '../../components/shared/loader/loader.component
   styleUrl: './drivers.component.scss',
   standalone: true,
     imports : [
-    HttpClientModule, TableModule, CommonModule, RouterLink , ButtonComponent,ButtonModule, Button, ModalComponent, LoaderComponent],
+    HttpClientModule, TableModule, CommonModule, RouterLink , FormsModule, ButtonComponent,ButtonModule, Button, ModalComponent, LoaderComponent],
 })
 export class DriversComponent implements OnInit {
+ isChecked: any;
+ message:any;
+
   private baseUrl = environment.serverUrl;
 
   private http = inject(HttpClient);
@@ -29,12 +33,13 @@ export class DriversComponent implements OnInit {
  showNoResults:boolean = false;
  moreActions:boolean = false;
 
+ insubmission = false;
 
 app_drivers: IApproved_Drivers [] = [];
   checked = false;
   userDetails:any;
   displayDialog:boolean = false;
-
+  take_action: boolean = false;
   loaderColor!: 'primary';
   showLoader = true;
   // searchText: string = '';
@@ -79,6 +84,39 @@ app_drivers: IApproved_Drivers [] = [];
   getDrivers(): Observable<any>{
     return this.http.get<any>(`${this.baseUrl}/api/admin/drivers`);
   }
+
+  aprroveDriver(approveForm: object, driverId:any) {
+    return this.http.put(`${this.baseUrl}/api/admin/driver/approval/${driverId}`, approveForm);
+  }
+
+  submitAction(driverId:any) {
+
+    this.insubmission = true;
+
+    let aprroveForm = {
+       approve: this.isChecked,
+       message: this.message
+     }
+     console.log(aprroveForm)
+     this.aprroveDriver(aprroveForm, driverId).subscribe(
+      (res: any) => {
+        // This is the 'next' function, which handles successful responses
+        console.log('Driver approved successfully:', res);
+        this.insubmission = false;
+        alert(res.data.message)
+        setTimeout(() => {
+          this.isModalVisible = false;
+        },2000)
+       
+      },
+      (err: any) => {
+        // This is the 'error' function, which handles any errors that occur
+        this.insubmission = false;
+        alert(err.error.data.message)
+       
+      }
+     );
+   }
 
 userAction(userId: any) {
   if (this.selectedUserId === userId) {
@@ -153,6 +191,7 @@ clear(){
     toggleDialog(){
       // this.displayDialog = !this.displayDialog
       this.isModalVisible = !this.isModalVisible
+      this.take_action = !this.take_action
      
     }
     isModalVisible: boolean = false;
@@ -163,6 +202,10 @@ clear(){
   
     hideModal() {
       this.isModalVisible = false;
+    }
+
+    actions() {
+      this.take_action = !this.take_action
     }
   
 }

@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import * as FileSaver from 'file-saver';
-import { IAllTrips } from '../../model/trips';
+// import { IAllTrips } from '../../model/trips';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpClientModule,  } from '@angular/common/http';
@@ -12,18 +12,16 @@ import { ModalComponent } from '../../components/shared/modal/modal.component';
 import { LoaderComponent } from '../../components/shared/loader/loader.component';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
-  selector: 'app-trips',
-  templateUrl: './trips.component.html',
-  styleUrls: ['./trips.component.scss'],
+  selector: 'app-trips-completed',
   standalone: true,
   imports : [
     HttpClientModule, TableModule, CommonModule, RouterLink , ButtonComponent,ButtonModule, Button, ModalComponent, LoaderComponent
-  ]
-  
+  ],
+  templateUrl: './trips-completed.component.html',
+  styleUrl: './trips-completed.component.scss'
 })
-export class TripsComponent implements OnInit {
+export class TripsCompletedComponent implements OnInit {
 
 
  @Input() searchText: string = '';
@@ -31,25 +29,25 @@ export class TripsComponent implements OnInit {
  showNoResults:boolean = false;
  moreActions:boolean = false;
   
-  trips: IAllTrips[] = [];
-  viewTrips: IAllTrips | any;
+  trips: any;
+  viewTrips: any;
   viewRowId: number | null = null;
   displayDialog: boolean = false;
   showLoader = true;
   userDetails:any
 
   loaderColor!: 'primary';
-  editedUser: IAllTrips | any;
+  editedUser: any;
   selectedUserId:any = null;
   editedRowId: number | null = null;
-  
+
   constructor(){}
   private baseUrl = environment.serverUrl;
   private http = inject(HttpClient);
   ngOnInit(): void {
     this.getAllTrips().subscribe(
       (res:any) =>{
-        console.log('All trips',res.data.trips.data)
+        console.log('completed trips',res.data.trips.data)
         this.trips = res.data.trips.data
         this.showLoader = false;
       }
@@ -57,17 +55,17 @@ export class TripsComponent implements OnInit {
    
   }
  
-  getAllTrips(): Observable<IAllTrips[]>{
-    return this.http.get<IAllTrips[]>(`${this.baseUrl}/api/admin/trips/all`);
+  getAllTrips(): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/api/admin/trips/completed`);
   }
     
-  viewTrip(trip: IAllTrips):any {
+  viewTrip(trip: any):any {
     this.viewTrips = { ...trip }; // Create a copy to avoid modifying the original data; 
     this.viewRowId = trip.id;
     this.displayDialog = true;
   }
   applyFilter() {
-    const filteredAdmins = this.trips.filter((item) => {
+    const filteredAdmins = this.trips.filter((item:any) => {
       // Adjust the conditions based on your filtering requirements
       return (
       item.firstname.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -75,8 +73,6 @@ export class TripsComponent implements OnInit {
       item.vehicle_type.toLowerCase().includes(this.searchText.toLowerCase()) 
       );
     });
-    // Update the table data with the filtered results
-    // If you are using server-side filtering, you may need to call an API here
     this.trips = filteredAdmins;
   }
 
@@ -102,7 +98,7 @@ clear(){
   this.searchText = '',
   this.getAllTrips().subscribe(
     (res:any) =>{
-      console.log('All trips',res.data.trips.data)
+      console.log('approved',res.data.trips.data)
       this.trips = res.data.trips.data
       this.showLoader = false;
     }
@@ -135,7 +131,5 @@ hideModal() {
  this.displayDialog = false;
 }
 
- 
 
 }
-

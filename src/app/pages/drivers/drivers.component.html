@@ -3,13 +3,14 @@
          <div class="w-[80vh] h-[60vh] flex items-start justify-center ">
              <div class="h-[95%] w-[95%]">
                  <div class="h-[10%] flex items-center w-full"> 
-                   <h3 class="h3 text-[#28094F]">Driver Details</h3>
+                   <h3  *ngIf="!take_action" class="h3 text-[#28094F]">Driver Details</h3>
+                   <h3  *ngIf="take_action"  class="h3 text-[#28094F]">Admin Actions</h3>
                  </div>
                  <div class="h-[80%] w-full flex  items-start">
-                    <div class="h-[80%] pt-4 w-full flex flex-wrap">
+                    <div class="h-[80%] pt-4 w-full flex flex-wrap" *ngIf="!take_action && !insubmission">
                         <div class="w-[50%]">
                             <h5>Name</h5>
-                            <p>{{ editedUser?.first_name }} {{ editedUser?.last_name }}</p>
+                            <p>{{ editedUser?.user_profile.first_name }} {{ editedUser?.user_profile_last_name }}</p>
                         </div>
                         <div class="w-[50%]">
                             <h5>Email</h5>
@@ -22,19 +23,10 @@
                             </p>
                             <p>{{ editedUser?.phone_no }}</p>
                         </div>
+                
                         <div class="w-[50%]">
-                            <h5>Vehicle Type</h5>
-                            <p *ngIf="editedUser?.vehicle_type === null || undefined || '' ">
-                                Not Specified
-                            </p>
-                            <p>{{ editedUser?.vehicle_type }}</p>
-                        </div>
-                        <div class="w-[50%]">
-                            <h5>Last Trip</h5>
-                            {{ editedUser?.last_tripDate | date:'short':'UTC' }}
-                            <p *ngIf="editedUser?.last_tripDate == null">
-                                not recorded
-                            </p>
+                            <h5>Average Rating</h5>
+                            {{ editedUser?.average_rating }}
                         </div>
                         <div class="w-[50%]">
                             <h5>Registration Date</h5>
@@ -45,13 +37,13 @@
                         </div>
                         <div class="w-[50%]">
                             <h5>City</h5>
-                            <span *ngIf="editedUser?.city === '' ">
+                            <span *ngIf="editedUser?.user_profile.city === '' ">
                                 <p>City Not Selected</p>
                             </span>
-                            <span *ngIf="editedUser?.city === null ">
+                            <span *ngIf="editedUser?.user_profile.city === null ">
                                 <p>City Not Selected</p>
                             </span>
-                            <p>{{ editedUser?.city }}</p>
+                            <p>{{ editedUser?.user_profile.city }}</p>
                         </div>
                         <div class="w-[50%]">
                             <h5>Wallet Balance</h5>
@@ -65,14 +57,49 @@
                         </div>
                         <div class="w-[50%]">
                             <h5>Driver Status</h5>
-                            <p *ngIf="editedUser?.driver_status == 1">
-                                Approved
-                            </p>
-                            <p *ngIf="editedUser?.driver_status == 0">
-                                UnApproved 
-                            </p>
+                            <p>{{ editedUser?.status }}</p>
+                           
                         </div>
                     </div>
+
+                    
+
+                    <div class="h-[80%]  w-full flex flex-wrap" *ngIf="take_action " >
+
+                        <app-loader *ngIf="insubmission"></app-loader>
+                        
+                        <div class="flex w-full justify-between h-[auto]" *ngIf="!insubmission">
+                            <div class="w-[40%]">
+                                <div class="form-group">
+                                    <label>Approve or Disapprove:</label> 
+                                    <br>
+                                    <input
+                                    type="checkbox"
+                                    id="exampleCheckbox"
+                                    [(ngModel)]="isChecked"
+                                    class="form-checkbox h-5 w-5 mt-2 rounded-md text-brand500"
+                                />
+                                </div>
+                               
+                            </div>
+                            <div class="w-[60%]">
+                                <div class="form-group">
+                                    <label>Reason for approval or disapproval:</label>
+                                    <br>
+
+                                    <input
+                                    type="text"
+                                    [(ngModel)]="message"
+                                    placeholder="Type your message..."
+                                    class="mt-2 h-[50px] p-2 w-full border border-gray-300 rounded-sm shadow-sm focus:outline-none focus:border-blue-500"
+                                />
+                                </div>
+                            </div>
+                            
+                        </div>
+                    
+                    </div>
+                        
                 </div>
                 
                  <div class="h-[10%] w-full flex justify-between">
@@ -80,9 +107,10 @@
                         <app-button buttonText="Cancel" borderColor="#F1F2F4" bgColor="transparent" (click)="toggleDialog()"></app-button>
                     </div>
                     <div class="btn w-[48%]">
-                     <a routerLink="/drivers/{{editedUser?.uuid}}/edit" class="hover:text-brand900">
-                       <app-button buttonText="Edit Drivers" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF"></app-button>
-                     </a>   
+                    
+                       <app-button *ngIf="!take_action" buttonText="Take Action" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="actions()"></app-button>
+                       <app-button *ngIf="take_action" buttonText="Submit Action" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="submitAction(editedUser?.uuid)"></app-button>
+                    
                  </div>
                  </div>
             </div>   
@@ -123,11 +151,11 @@
                                 <td> DRV00{{ users.id }}</td>
                                 <td>
                                     <span class="flex items-center"> 
-                                        <!-- <img src="./user.png" class="w-8" alt="sidebar"> -->
-                                        <img 
+                                        <img src="./user.png" class="w-8" alt="sidebar">
+                                        <!-- <img 
                                         [src]="users.user_profile.profile_url || 'path/to/default-image.png'" 
                                         class="w-8 rounded-full" 
-                                        alt="dp">
+                                        alt="dp"> -->
                                        <span class="capitalize flex flex-wrap mx-2">{{users.user_profile.first_name}} {{users.user_profile.last_name}}</span> 
                                        <span *ngIf="users.user_profile.first_name === '' && users.user_profile.last_name === '' ">No Name</span>
                                     </span>
@@ -211,7 +239,7 @@
                                     </span>
                                 </div>
                                 <div class="h-[32%] flex items-center justify-center">
-                                    <a routerLink="/driver/{{users.uuid}}/edit" class="hover:text-brand900">
+                                    <a routerLink="/users/{{users.uuid}}/edit" class="hover:text-brand900">
                                        <span class="hover:font-medium">Edit User</span> 
                                     </a>
                                 </div>

@@ -1,5 +1,5 @@
 
-  <div class="w-full h-full">
+<div class="w-full h-full">
     <app-modal [title]="''" [isVisible]="displayDialog" (closeModal)="hideModal()">
         <div class="w-[80vh] h-[60vh] flex items-start justify-center ">
             <div class="h-[95%] w-[95%]">
@@ -44,13 +44,13 @@
                        </div>
                        <div class="w-[50%]">
                            <h5>Trip Status</h5>
-                           <div *ngIf="editedUser?.trip_status == 4">
+                           <div *ngIf="editedUser?.trip_status == 7">
                                <span>Completed</span>
                            </div>
-                           <div *ngIf="editedUser?.trip_status == 6">
+                           <div *ngIf="editedUser?.trip_status == 4">
                                <span>In Progress</span>
                            </div>
-                           <div *ngIf="editedUser?.trip_status == 7">
+                           <div *ngIf="editedUser?.trip_status == 6">
                                <span>Cancelled</span>
                            </div>
                            <div *ngIf="editedUser?.trip_status == '' || null || undefined   ">

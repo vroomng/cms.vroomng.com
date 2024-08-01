@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl , FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
+import { FormControl, FormGroup,FormsModule,ReactiveFormsModule,Validators, } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { ModalComponent } from '../../components/shared/modal/modal.component';
 import { ButtonComponent } from '../../components/shared/button/button.component';
 import { Observable } from 'rxjs';
@@ -9,10 +8,11 @@ import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from '../../components/shared/loader/loader.component';
 import { VRInputComponent } from '../../components/shared/vr-input/vr-input.component';
+import { CommonModule } from '@angular/common';
 
 interface City {
   name: string;
-  // code: string;
+  code: string;
 }
 
 @Component({
@@ -20,126 +20,151 @@ interface City {
   templateUrl: './riders-add.component.html',
   styleUrls: ['./riders-add.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ButtonComponent, ModalComponent, VRInputComponent, LoaderComponent, HttpClientModule]
+  imports: [FormsModule, ReactiveFormsModule, ButtonComponent, CommonModule, ModalComponent, VRInputComponent, LoaderComponent, HttpClientModule]
 })
-export class RidersAddComponent {
-  // variables
-  cities!: City[] |  undefined;
-  showAlert = false;
-  alertMsg = 'Please wait';
-  alertColor = 'primary';
-  userDetails:any;
-  displayDialog:boolean = false;
+export class RiderAddComponent implements OnInit {
 
   private baseUrl = environment.serverUrl;
 
   private http = inject(HttpClient);
-  
-  // constructors & lifecycles
-  constructor(private router:Router){
-  }
+
+  userDetails:any
+  insubmission = false;
+  cities!: City[] |  undefined;
+  vehicles!: City[] |  undefined;
+  showAlert = false;
+  alertMsg = 'Please wait';
+  alertColor = 'primary';
+
+  isModalVisible: boolean = false;
+
+// constructor and lifecycle methods
+  constructor(private router:Router)
+      {
+     }
+
   ngOnInit(){
-    this.displayDialog = true;    
-    this.cities = [
-      { name: 'Abia' },
-      { name: 'Enugu' },
-      { name: 'Bauchi' },
-      { name: 'Calabar' },
-      { name: 'Uyo' },
-      { name: 'Port Harcourt' },
-      { name: 'Abuja' },
-      { name: 'Lagos'},
+
+    this.isModalVisible = true;
+
+    this.vehicles = [
+      { name: 'SUV', code: 'NY' },
+      { name: 'Sedan', code: 'RM' },
+      { name: 'Van', code: 'LDN' },
   ];
-  // const userDetails = this.users.getStoredUserDetails();
-  // this.userDetails = userDetails
-  // this.addAccessTrail()
+  this.cities = [
+    { name: 'Abia',  code: 'abia'},
+    { name: 'Enugu',  code: 'enu' },
+    { name: 'Bauchi',  code: 'bau' },
+    { name: 'Calabar',  code: 'cal' },
+    { name: 'Uyo', code: 'uyo' },
+    { name: 'Port Harcourt',  code: 'ph' },
+    { name: 'Abuja',  code: 'abj' },
+    { name: 'Lagos',  code: 'lag'},
+];
+
 }
-// functions
-// validators & formcontrols
+   // validators & formcontrols
+
+  //  license_docu!: FormControl;
     
-firstname = new FormControl('',[Validators.required, Validators.minLength(3)]);
-lastname = new FormControl('', [Validators.required, Validators.minLength(3)]);
-email = new FormControl('', [Validators.required, Validators.minLength(3)]);
-phone_no = new FormControl('+234',[Validators.required, Validators.minLength(3)]);
-password = new FormControl('', [Validators.required, Validators.minLength(3)]);
-user_type = new FormControl('1',[Validators.required, Validators.minLength(3)]);
-city = new FormControl('',[Validators.required, Validators.minLength(3)]);
-balance = new FormControl('',[Validators.required, Validators.minLength(0)]);
-ref_by = new FormControl('SAMUELD1122',[Validators.required, Validators.minLength(0)]);
-profile_url = new FormControl('https://res.cloudinary.com/xenxei46/image/upload/v1682686741/boy_rexp5y.png',[Validators.required, Validators.minLength(0)]);
-device_token = new FormControl('ertyu1',[Validators.required, Validators.minLength(0)]);
-device_type = new FormControl('1',[Validators.required, Validators.minLength(0)]);
-ride_check = new FormControl('1',[Validators.required, Validators.minLength(0)]);
-country_code = new FormControl('NG',[Validators.required, Validators.minLength(0)]);
-country_dailing_code = new FormControl('+234',[Validators.required, Validators.minLength(0)]);
+   
+  first_name = new FormControl('',[Validators.required, Validators.minLength(3)])
+  last_name = new FormControl('',[Validators.required, Validators.minLength(3)])
+  email = new FormControl('',
+  [Validators.required,Validators.email], 
+  // [this.emailTaken.validate]
+  )
+  phone_no = new FormControl('+234', [
+    Validators.required,
+    Validators.minLength(11),
+    Validators.maxLength(15)
+  ]) 
+  password = new FormControl('',[Validators.required, Validators.pattern(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)])
+  password_confirmation = new FormControl('',[Validators.required, Validators.pattern(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)])
+  profile_url = new FormControl(<any>[ Validators.minLength(0)])
+  city = new FormControl('', [Validators.required, Validators.minLength(3)]) 
 
-// Grouped Form
-addRiders = new FormGroup({
-  firstname: this.firstname,
-  lastname: this.lastname,
-  email: this.email,
-  phone_no: this.phone_no,
-  password: this.password,
-  user_type: this.user_type,
-  city: this.city,
-  balane: this.balance,
-  ref_by: this.ref_by,
-  profile_url: this.profile_url,
-  device_token: this.device_token,
-  device_type: this.device_type,
-  ride_check: this.ride_check,
-  country_code: this.country_code,
-  country_dailing_code: this.country_dailing_code
-
-})
-
+   // Grouped Form
+   riderForm = new FormGroup({
+    first_name: this.first_name,
+    last_name: this.last_name,
+    email: this.email,
+    phone_no: this.phone_no,
+    password: this.password,
+    password_confirmation: this.password_confirmation,
+    city: this.city,
   
-onSubmit(){
-  this.showAlert = true
-  setTimeout(() => {
-    this.showAlert = true
-    this.alertMsg = 'Loading... If sync persists check network'
-    this.alertColor = 'info'
-    const ridersData = this.addRiders.value
-    // console.log(ridersData)
-    this.addRider(ridersData).subscribe(
-      (res:any) => {
-       console.log(res)
-       if(res.code == 200){
-        this.alertMsg = res.message,
-        this.alertColor = "success"
-       } else {
-        this.alertMsg = res.message,
-        this.alertColor = 'danger'
-       }
-       } 
-    )
-    }, 1600)
-}
+   })
 
+  submit(){
+    console.log(this.riderForm.value)
+    this.insubmission = true
+     
+    let addRider = {
+      ...this.riderForm.value,
+      user_type: 'rider', 
+      device_token: 'vroomxtt1234',
+      ref_code: 'adeife.taiwo',
+      ref_by: 'Vroomng',
+  
+      // profile_url: this.profile_url.value.name
+    };
+  
+    console.log(this.riderForm)
+    this.insubmission = true
+    setTimeout(() => {
+      this.showAlert = true;
+  
+      this.addnewRider(addRider).subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.insubmission = false
+          alert(res.data.message);
+          this.router.navigate(['/users']);
+         
+        },
+        error: (err: any) => {
+          console.error('error',err);
+          alert(err.error.data.message);
+          this.insubmission = false
+          // alert('An error occurred while adding the admin.');
+        }
+      });
+    }, 1000);
+    
+    
+  }
 
-addRider(addRiders:any){
-  return this.http.post(`${this.baseUrl}/newUserEntry`, addRiders)
-}
+  addnewRider(addDrivers:any){
+    return this.http.post(`${this.baseUrl}/api/admin/user/store`, addDrivers)
+  }
 
-close(){
-  this.displayDialog = !this.displayDialog;
-  this.router.navigate(["/users"])
- }
 
 
 reset(){
-  this.addRiders.reset()
+  this.riderForm.reset()
 }  
+  close(){
+    // window.alert('close')
+    this.isModalVisible = !this.isModalVisible
+    setTimeout(() => {
+      const currentUrl = this.router.url;
+      this.router.navigateByUrl('/users', { skipLocationChange: true }).then(() => {
+        this.router.navigate([currentUrl]);
+      });
+    }, 500);
+    this.router.navigate(["/users"])
+   }
 
+   showModal() {
+    this.isModalVisible = true;
+  }
 
-showModal() {
-  this.displayDialog = true;
-}
-
-hideModal() {
-  this.displayDialog = false;
-}
-
-
+  hideModal() {
+    this.isModalVisible = false;
+  }
+   
 }

@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TripsComponent } from '../trips/trips.component';
+import { TripsCompletedComponent } from '../trips-completed/trips-completed.component';
+import { TripsOngoingComponent } from '../trips-ongoing/trips-ongoing.component';
+import { TripsCanceledComponent } from '../trips-canceled/trips-canceled.component';
 
 
 
@@ -13,13 +16,15 @@ import { TripsComponent } from '../trips/trips.component';
   templateUrl: './trip-menu.component.html',
   styleUrls: ['./trip-menu.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterLink,FormsModule, ReactiveFormsModule, TripsComponent,  ],
+  imports: [CommonModule, RouterLink,FormsModule, ReactiveFormsModule, TripsComponent,TripsCompletedComponent, TripsCanceledComponent, TripsOngoingComponent],
   
 })
 export class  TripMenuComponent {
   
 @ViewChild(TripsComponent) childRef!:  TripsComponent;
-// @ViewChild(TripsCompletedComponent) childRef1!: TripsCompletedComponent;
+@ViewChild(TripsCompletedComponent) childRef1!: TripsCompletedComponent;
+@ViewChild(TripsCanceledComponent) childRef2!: TripsCanceledComponent;
+@ViewChild(TripsOngoingComponent) childRef3!: TripsOngoingComponent;
 
   users = [
     // { id: 1, name: "All Trips", },

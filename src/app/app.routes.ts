@@ -11,10 +11,8 @@ import { authGuard } from './guard/auth/auth.guard';
 import { AdminAddComponent } from './pages/admin-add/admin-add.component';
 import { AdminEditComponent } from './pages/admin-edit/admin-edit.component';
 import { LoginGuard } from './guard/login/login.guard';
-import { DriversEditComponent } from './pages/drivers-edit/drivers-edit.component';
 import { DriversAddComponent } from './pages/drivers-add/drivers-add.component';
-import { RidersAddComponent } from './pages/riders-add/riders-add.component';
-import { RidersEditComponent } from './pages/riders-edit/riders-edit.component';
+import { RiderAddComponent } from './pages/riders-add/riders-add.component';
 import { TripMenuComponent } from './pages/trip-menu/trip-menu.component';
 import { VehiclesMenuComponent } from './pages/vehicles-menu/vehicles-menu.component';
 import { RatingsMenuComponent } from './pages/ratings-menu/ratings-menu.component';
@@ -61,21 +59,16 @@ export const routes: Routes = [
         { path: 'trips-menu',      component: TripMenuComponent, 
             canActivate: [authGuard]},
 
-        { path: 'driver/:uuid/edit', component: DriversEditComponent, title:'Edit Driver', 
-             canActivate: [authGuard]
-         },
          { 
             path: 'add-driver',      component: DriversAddComponent, 
            canActivate: [authGuard]
         },
 
         {
-            path: 'add-rider',      component: RidersAddComponent,
+            path: 'add-rider',      component: RiderAddComponent,
             canActivate: [authGuard]
         },
-        { path: 'rider/:uuid/edit', component: RidersEditComponent, title:'Edit Rider',  
-           canActivate: [authGuard]
-        },
+
         { 
           path: 'vehicles-menu', component: VehiclesMenuComponent,  
           canActivate: [authGuard]
