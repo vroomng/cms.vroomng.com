@@ -1,1 +1,88 @@
-<p>access-control works!</p>
+<div class="role-base w-full h-[100vh] ">
+    <div class="w-full h-[8%] flex justify-center items-center ">
+        <div class="w-[95%] h-full  border-b border-brand600 flex items-center  ">
+            <h1 class="h1">Role based Access</h1>
+        </div>
+    </div>
+
+    <div class="h-[95%] w-full flex justify-center items-center ">
+        <div class="h-[95%] w-[95%] ">
+            <div class="flex justify-between items-center h-[8%] mt-2 ">
+                    <div class="w-[80%] h-full flex items-center">
+                        <span><img src="./user.png" width="60px" height="60px"/></span>
+                        <span class="mx-3 text-xl">{{admin.user.user_profile.first_name}} {{admin.user.user_profile.last_name}}</span>
+                    </div>
+                    <div class="w-[20%] h-full flex items-center  ">
+                        <div class="h-[80%] w-[80%]">
+                            <app-button buttonText="Save" (click)="saveResults()" class="ml-10" borderColor="black" bgColor="#28094F" textColor="#FFFFFF"></app-button>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="h-[90%] w-full flex flex-col  items-center mt-2 ">
+                <div class="h-[40%] w-full ">
+                        <h3 class="h3">User role</h3>
+
+                        <div class="w-[100%]">
+                            <div class="form-group mt-2">
+                                <label>Role Name:</label>
+                                <input type="text"  name="Admin"
+                                    class="form-control form-control-alternative mt-2 p-3" placeholder="Admin"
+                                    value="" readonly
+                                >
+                            </div>
+                            <div class="form-group mt-2">
+                                <label>Role description:</label>
+                                <input type="text"  name="Admin"
+                                    class="form-control form-control-alternative mt-2 p-3" 
+                                    placeholder="Administratiors can edit user, delete user, add or approve a user, view user details and more."
+                                    value="" readonly
+                                >
+                            </div>
+                        </div>
+                </div>
+                <div class="h-[45%] w-full ">
+                        <h3 class="h3">Access</h3>
+
+                        <div *ngFor="let access of accesses; let i = index" class="w-[100%] h-[25%] flex mt-3">
+                            <div class="access_type w-[20%]">
+                              <div class="form-group">
+                                <div><label for="accessType">Access Type</label></div>
+                                <select
+                                  id="accessType"
+                                  class="p-6 py-2 mt-1 w-full border border-gray-300 rounded"
+                                  [(ngModel)]="access.selectedAccessType"
+                                  (change)="onAccessTypeChange(i)"
+                                >
+                                  <option *ngFor="let type of accessTypes" [value]="type">{{ type }}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="permission w-[20%]">
+                              <div><label for="permission">Permission:</label></div>
+                              <select
+                                id="permission"
+                                class="p-6 py-2 mt-1 border border-gray-300 rounded"
+                                [(ngModel)]="access.selectedPermission"
+                                (change)="onPermissionChange(i)"
+                              >
+                                <option *ngFor="let perm of permissions" [value]="perm">{{ perm }}</option>
+                              </select>
+                            </div>
+                            <div class="action w-[40%]">
+                              <div><label for="permission">Action:</label></div>
+                              <div class="border-2 border-slate-100 rounded-lg flex items-center justify-left py-2.5 mt-1">
+                                <button
+                                  *ngIf="access.result"
+                                  id="resultButton"
+                                  class="px-2 bg-[#E8DEF8] w-[60%] h-[45%] flex justify-between items-center text-[#28094F] rounded"
+                                >
+                                  {{ access.result }} <i class="fa-solid fa-remove"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+        </div>
+    </div>
+
+</div>

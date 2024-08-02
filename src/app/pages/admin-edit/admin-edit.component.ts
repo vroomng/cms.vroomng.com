@@ -54,7 +54,6 @@ insurance_document_back:any
 vehicle_inspection_report:any
 other_documents:any;
 
-
   constructor(
     private route: ActivatedRoute,
     private router:Router,

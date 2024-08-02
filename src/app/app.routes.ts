@@ -81,8 +81,12 @@ export const routes: Routes = [
           path: 'quest-menu', component: QuestsMenuComponent,  
           canActivate: [authGuard]
         },
+        // { 
+        //   path: 'access-control', component: AccessControlComponent,  
+        //   canActivate: [authGuard]
+        // },
         { 
-          path: 'access-control', component: AccessControlComponent,  
+          path: 'access-control/:uuid/roles', component: AccessControlComponent,  
           canActivate: [authGuard]
         },
         { 
