@@ -4,7 +4,7 @@ import { AdminComponent } from './layout/admin/admin.component';
 import { Component } from '@angular/core';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
-import { VehiclesComponent } from './pages/vehicles/vehicles.component';
+
 import { LoginComponent } from './pages/login/login.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { authGuard } from './guard/auth/auth.guard';
@@ -19,6 +19,9 @@ import { RatingsMenuComponent } from './pages/ratings-menu/ratings-menu.componen
 import { QuestsMenuComponent } from './pages/quests-menu/quests-menu.component';
 import { AccessControlComponent } from './pages/access-control/access-control.component';
 import { AppActionsComponent } from './pages/app-actions/app-actions.component';
+import { VehiclesAddComponent } from './pages/vehicles-add/vehicles-add.component';
+import { VehicleMakeAddComponent } from './pages/vehicle-make-add/vehicle-make-add.component';
+import { VehicleEditComponent } from './pages/vehicle-edit/vehicle-edit.component';
 
 export const routes: Routes = [
     {
@@ -44,11 +47,7 @@ export const routes: Routes = [
              component: UsersComponent,
              canActivate: [authGuard],
           },
-          {
-            path: 'vehicles',
-            component: VehiclesComponent,
-            canActivate: [authGuard],
-          },
+         
 
           { path: 'add-admin', component: AdminAddComponent, 
             canActivate: [authGuard]
@@ -92,6 +91,16 @@ export const routes: Routes = [
         { 
           path: 'app-actions-menu', component: AppActionsComponent,  
           canActivate: [authGuard]
+        },
+        {
+          path: 'add-vehicle-type',      component: VehiclesAddComponent,
+        },
+        {
+          path: 'add-vehicle-make',      component: VehicleMakeAddComponent,
+        },
+
+        {
+          path: 'vehicleUpdate/:uuid/edit',      component: VehicleEditComponent,
         },
 
 

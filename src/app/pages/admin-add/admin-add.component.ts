@@ -1,8 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { EmailTaken } from '../../helpers/validators/email-taken';
-// import { AdminService } from 'src/app/service/admin.service';
-// import { UsersService } from 'src/app/service/users.service';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../components/shared/modal/modal.component';
 import { ButtonComponent } from '../../components/shared/button/button.component';
@@ -43,6 +40,7 @@ export class AdminAddComponent implements OnInit {
   private http = inject(HttpClient);
 
   isModalVisible:boolean = false;
+  
     // List of items to display in the dropdown
   items = [
     { id: 1, name: 'Item 1' },

@@ -21,5 +21,15 @@ export interface IRiders {
     trip_id: number
     phone_no: string
   }
+  export interface IRatings_D {
+    id: number
+    riderName: string
+    driverName: string
+    rating: number
+    comments: string
+    updated_at: string
+    trip_id: number
+    phone_no: string
+  }
   
   

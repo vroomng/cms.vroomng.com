@@ -266,17 +266,10 @@ other_documents:any;
           });
         } else {
           alert('Please select a file before uploading.');
-        
-
           console.log(FormData)
 
         }
 
-
-
-
-
-  
       } else {
         alert('Please select a file to upload');
       }
@@ -300,7 +293,7 @@ other_documents:any;
     const selectedBankId = +event.target.value;
     this.selectedBank = this.banks.find((bank: { id: number; }) => bank.id === selectedBankId);
     console.log(this.selectedBank);
-  }
+  } 
 
   AddBank() {
     this.inSubmission = !this.inSubmission

@@ -1,6 +1,4 @@
-<!-- <app-vr-alert *ngIf="showAlert" [color]="alertColor">
-    {{ alertMsg }}
-</app-vr-alert> -->
+
 <div>
     <!-- <p-dialog [(visible)]="displayDialog" [modal]="true" [responsive]="true" [closable]="false"  class="absolute rounded-full"> -->
         <app-modal [title]="''" [isVisible]="isModalVisible" (closeModal)="hideModal()">
@@ -16,30 +14,7 @@
                     <app-loader *ngIf="inSubmission"></app-loader>
                     <div class="card-body" *ngIf="!inSubmission">   
                         <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
-                            <!-- <div class="flex w-full justify-between h-[auto]">
-                                <div class="w-[49%]">
-                                    <div class="form-group flex">
-                                        
-                                       <label for="file-upload" class="relative bottom-0 right-0 mb-2 mr-2">
-                                            <div class="w-8 h-8 bg-brand600 text-white rounded-full flex items-center justify-center cursor-pointer">
-                                              <i class="fas fa-camera" ></i>
-                                            </div>
-                                          </label>
-                                          <input
-                                            id="file-upload"
-                                            type="file"
-                                            class="hidden"
-                                            (change)="onFileSelected($event)"
-                                            accept="image/*"
-                                          />
-                                    </div>
-                                </div>
-                                <div class="w-[49%]">
-                                    <div class="form-group">
-                                        
-                                    </div>
-                                </div>
-                            </div> -->
+                        
                             <div class="flex w-full justify-between h-[auto]">
                                 <div class="w-[49%]">
                                     <div class="form-group">
@@ -93,44 +68,7 @@
                                 </div>
                               
                             </div>
-                            <!-- <div class="flex w-full justify-between h-[auto]">
-                                <div class="w-[49%]">
-                                    <div class="form-group">
-                                        <label htmlFor="ref_code">Reference code (optional):</label>
-                                        <app-vr-input [control]="ref_code" placeholder="Reference Code"></app-vr-input>
-                                    </div>
-                                </div>
-                                <div class="w-[49%]">
-                                    <div class="form-group">
-                                        <label htmlFor="ref_by">Referee (optional):</label>
-                                        <app-vr-input [control]="ref_by" placeholder="Reference By"></app-vr-input>
-                                </div>
-                                </div>
-                            </div> -->
-                        
-                            <!-- <div class="flex w-full justify-between h-[auto]">
-                                <div class="w-[49%]">
-                                    <div class="form-group">
-                                        <div>
-                                            <label htmlFor="city">Admin Type:</label>
-                                        </div>
-                                        <app-vr-input [control]="user_type" placeholder="Admin Type"></app-vr-input>
-                                       
-                                    </div>
-                                </div>
-                                <div class="w-[49%]">
-                                    <div class="form-group">
-                                        <label htmlFor="city">Admin Role</label>
-                                       
-                                            <ul>
-                                                <li><b>Super Admin</b>: Can view, Can add, Can edit, Can delete.</li>
-                                                <li><b>Sub Admin</b>: Can view, Can edit </li>
-                                                <li><b>Partner</b>: Can view  </li>
-                                            </ul>
-                                      
-                                    </div>
-                                </div>
-                            </div> -->
+                          
                         </form>
                 </div>            
                 </div>

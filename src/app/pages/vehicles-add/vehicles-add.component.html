@@ -1,0 +1,243 @@
+
+<div>
+    
+        <app-modal [title]="''" [isVisible]="isModalVisible" (closeModal)="hideModal()">
+        <div class="w-[80vh] h-[60vh] flex items-start justify-center ">
+            <div class="h-[100%] w-[95%]">
+                <div class="h-[10%] flex items-center justify-between w-full"> 
+                    <h3 class="h3 text-[#28094F]">Add Vehicle Type</h3>
+                    <button (click)="close()">
+                        <i class="fa fa-times text-[20px]" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="h-[80%] overflow-y-scroll w-full flex  items-start" > 
+                    <app-loader *ngIf="inSubmission"></app-loader>
+                    <div class="card-body" *ngIf="!inSubmission">   
+                        <form [formGroup]="addVTypeForm">
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Vehicle Type:</label>
+                                  <app-vr-input [control]="vehicle_type" placeholder="Vehicle Type"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Per Km Rate:</label>
+                                  <app-vr-input [control]="per_km_rate" placeholder="Per Km Rate"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Per Minute Rate:</label>
+                                  <app-vr-input [control]="per_minute_rate" placeholder="Per Minute Rate"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Base Fare:</label>
+                                  <app-vr-input [control]="base_fare" placeholder="Base Fare"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Tolls Fees:</label>
+                                  <app-vr-input [control]="tolls_fees" placeholder="Tolls Fees"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Minimum Fare:</label>
+                                  <app-vr-input [control]="minimum_fare" placeholder="Minimum Fare"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Tax Percent(%):</label>
+                                  <app-vr-input [control]="tax_percent" placeholder="Tax Percent"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Commission(%):</label>
+                                  <app-vr-input [control]="commission" placeholder="Commission"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+
+                        
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Available Seat:</label>
+                                  <app-vr-input [control]="available_seat" placeholder="Available Seat"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Description:</label>
+                                  <app-vr-input [control]="description" placeholder="Description"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Is Vehicle Available?:</label>
+                                  <select formControlName="is_active"  class="form-control">
+                                    <option value="" disabled selected>Yes or No </option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Trip Type:</label>
+                                  <app-vr-input [control]="trip_type" placeholder="Trip Type"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Peek Hour Fare:</label>
+                                  <app-vr-input [control]="peek_hour_fare" placeholder="Peek Hour Fare"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                    <label>Vehicle Make:</label>
+                                    <select id="make" (change)="onMakeSelect($event)">
+                                      <option value="" disabled selected>Select Make</option>
+                                      <option *ngFor="let make of make" [value]="make.id">
+                                        {{ make.title }}
+                                      </option>
+                                    </select>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Model:</label>
+                                  <app-vr-input [control]="model" placeholder="Model"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>ModelYear:</label>
+                                  <select formControlName="year" id="year" class="form-control">
+                                    <option value="">Select Year</option>
+                                    <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <!-- <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Vehicle Image:</label>
+                                  <app-vr-input [control]="vehicle_image" placeholder="Vehicle Image"></app-vr-input>
+                                </div>
+                              </div> -->
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Per Km Rate Share:</label>
+                                  <app-vr-input [control]="per_km_rate_share" placeholder="Per Km Rate Share"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Per Minute Rate Share:</label>
+                                  <app-vr-input [control]="per_minute_rate_share" placeholder="Per Minute Rate Share"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Minimum Fare Share:</label>
+                                  <app-vr-input [control]="minimum_fare_share" placeholder="Minimum Fare Share"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Base Fare Share:</label>
+                                  <app-vr-input [control]="base_fare_share" placeholder="Base Fare Share"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Promo Status:</label>
+                                  <app-vr-input [control]="promo_status" placeholder="Promo Status"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Max Fare Value:</label>
+                                  <app-vr-input [control]="max_fare_value" placeholder="Max Fare Value"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                                <h4 class="h4 text-[#28094F]">Cancellation Charges</h4>
+                            </div>
+                          
+                            <div class="flex w-full justify-between h-[auto]">
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Cancel Charge Driver:</label>
+                                  <app-vr-input [control]="cancel_charge_driver" placeholder="Cancel Charge Driver"></app-vr-input>
+                                </div>
+                              </div>
+                              <div class="w-[49%]">
+                                <div class="form-group">
+                                  <label>Cancel Charge Rider:</label>
+                                  <app-vr-input [control]="cancel_charge_rider" placeholder="Cancel Charge Rider"></app-vr-input>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                          
+                </div>            
+                </div>
+                <div class="h-[10%] w-full flex justify-between">
+                    <div class="btn w-[48%]">
+                        <app-button buttonText="Reset" borderColor="#F1F2F4" bgColor="transparent" (click)="reset()"
+
+                        ></app-button>
+                    </div>
+                    <div class="btn w-[48%]">      
+                        <app-button buttonText="Save" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="submit()"
+                    
+                        ></app-button>            
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </app-modal>
+</div>
+
+            

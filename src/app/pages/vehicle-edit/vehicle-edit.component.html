@@ -1,0 +1,280 @@
+<!-- <app-vr-alert *ngIf="showAlert" [color]="alertColor">
+    {{ alertMsg }}
+</app-vr-alert> -->
+
+
+<div>
+    <app-modal [title]="''" [isVisible]="isModalVisible" (closeModal)="hideModal()">
+        <div class="w-[80vh] h-[60vh] flex items-start justify-center ">
+            <div class="h-[100%] w-[95%]">
+                <div class="h-[10%] flex items-center justify-between w-full"> 
+                    <h3 class="h3 text-[#28094F]">Edit Vehicle</h3>
+                    <button (click)="close()">
+                        <i class="fa fa-times text-[20px]" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class=" overflow-y-scroll h-[80%] w-full flex  items-start"> 
+                    <div class="w-full"> 
+                        <app-loader *ngIf="inSubmission"></app-loader>
+                    <div class="card-body" *ngIf="!inSubmission">   
+                        <form>
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Vehicle Type:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.vehicle_type" name="vehicle_type" 
+                                    class="form-control form-control-alternative" placeholder="Vehicle Type">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Per Km Rate:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.per_km_rate" name="per_km_rate" 
+                                    class="form-control form-control-alternative" placeholder="Per KM Rate">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Per Minute Rate:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.per_minute_rate" name="per_minute_rate" 
+                                    class="form-control form-control-alternative" placeholder="Per Minute Rate">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Base Fare:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.base_fare" name="base_fare" 
+                                    class="form-control form-control-alternative" placeholder="Base Fare">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Tolls Fees:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.tolls_fees" name="tolls_fees" 
+                                    class="form-control form-control-alternative" placeholder="Tolls Fees">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Minimum Fare:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.minimum_fare" name="minimum_fare" 
+                                    class="form-control form-control-alternative" placeholder="Minimum Fare">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Tax Percent(%):</label>
+                                        <input type="text" [(ngModel)]="vehicleType.tax_percent" name="tax_percent" 
+                                    class="form-control form-control-alternative" placeholder="Tax Percent">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Commission(%):</label>
+                                        <input type="text" [(ngModel)]="vehicleType.commission" name="commission" 
+                                    class="form-control form-control-alternative" placeholder="Commission">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Available Seat:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.available_seat" name="available_seat" 
+                                    class="form-control form-control-alternative" placeholder="Available Seat">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Description:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.description" name="description" 
+                                    class="form-control form-control-alternative" placeholder="Description">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Is Vehicle Available?:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.is_active" name="is_vehicle_available"
+                                        class="form-control form-control-alternative" placeholder="Is Vehicle Available">
+                                        <!-- <select [(ngModel)]="vehicleType.is_active" name="is_active" class="form-control">
+                                            <option value="" disabled selected>Yes or No </option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select> -->
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Trip Type:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.trip_type" name="trip_type" 
+                                    class="form-control form-control-alternative" placeholder="Trip Type">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Peek Hour Fare:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.peek_hour_fare" name="peek_hour_fare" 
+                                    class="form-control form-control-alternative" placeholder="Peek Hour Fare">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Vehicle Make:</label>
+                                        <!-- <select [(ngModel)]="vehicleType.make" name="make" (change)="onMakeSelect($event)" class="form-control">
+                                            <option value="" disabled selected>Select Make</option>
+                                            <option *ngFor="let make of makes" [value]="make.id">
+                                                {{ make.title }}
+                                            </option>
+                                        </select> -->
+                                        <input type="text" [(ngModel)]="vehicleType.make" name="make"
+                                    class="form-control form-control-alternative" placeholder="Vehicle Make">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Model:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.model" name="model" 
+                                    class="form-control form-control-alternative" placeholder="Model">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>ModelYear:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.model_year" name="model_year"
+                                    class="form-control form-control-alternative" placeholder="Model Year">
+                                        <!-- <select [(ngModel)]="vehicleType.year" name="year" class="form-control">
+                                            <option value="">Select Year</option>
+                                            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                                        </select> -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <!-- <div class="form-group"> -->
+                                        <!-- <label>Vehicle Image:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.vehicle_image" name="vehicle_image" 
+                                       class="form-control form-control-alternative" placeholder="Vehicle Image"> -->
+                                    <!-- </div> -->
+                                       <div class="form-group">
+                                        <label>Tax Percent:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.tax_percent" name="tax_percent" 
+                                    class="form-control form-control-alternative" placeholder="Tax Percent">
+                                    </div>
+                                    
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Per Km Rate Share:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.per_km_rate_share" name="per_km_rate_share" 
+                                    class="form-control form-control-alternative" placeholder="Per Km Rate Share">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Per Minute Rate Share:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.per_minute_rate_share" name="per_minute_rate_share" 
+                                    class="form-control form-control-alternative" placeholder="Per Minute Rate Share">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Minimum Fare Share:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.minimum_fare_share" name="minimum_fare_share" 
+                                    class="form-control form-control-alternative" placeholder="Minimum Fare Share">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Base Fare Share:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.base_fare_share" name="base_fare_share" 
+                                    class="form-control form-control-alternative" placeholder="Base Fare Share">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Promo Status:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.promo_status" name="promo_status" 
+                                    class="form-control form-control-alternative" placeholder="Promo Status">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Max Fare Value:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.max_fare_value" name="max_fare_value" 
+                                    class="form-control form-control-alternative" placeholder="Max Fare Value">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="h4 text-[#28094F]">Cancellation Charges</h4>
+                            </div>
+                            
+                            <div class="flex w-full justify-between h-[auto]">
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Cancel Charge Driver:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.cancel_charge_driver" name="cancel_charge_driver" 
+                                    class="form-control form-control-alternative" placeholder="Cancel Charge Driver">
+                                    </div>
+                                </div>
+                                <div class="w-[49%]">
+                                    <div class="form-group">
+                                        <label>Cancel Charge Rider:</label>
+                                        <input type="text" [(ngModel)]="vehicleType.cancel_charge_rider" name="cancel_charge_rider" 
+                                    class="form-control form-control-alternative" placeholder="Cancel Charge Rider">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>            
+                     </div>            
+                </div>
+                <div class="h-[10%] w-full flex justify-between">
+                    <div class="btn w-[48%]">
+                        <app-button buttonText="Delete" borderColor="#f01717" bgColor="#f01717" textColor="#FFFFFF" (click)="deleteVehicle()"
+
+                        ></app-button>
+                    </div>
+                    <div class="btn w-[48%]">      
+                        <app-button buttonText="Save" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF" (click)="update()"
+                        
+                        ></app-button>            
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </app-modal>
+</div>

@@ -157,10 +157,10 @@
                                     <td>
                                         
                                         <div *ngIf="trips.trip_status == '4' ">
-                                            <div class="border-2 border-slate-100 rounded-lg flex items-cemter justify-center ">
+                                            <!-- <div class="border-2 border-slate-100 rounded-lg flex items-cemter justify-center ">
                                                 <span class="w-2 h-2 bg-green-500 my-2 mx-1 rounded-full"></span>
                                                 <span class=" my-1 mr-1">Complete</span>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div *ngIf="trips.trip_status == '6'">
                                             <div class="border-2 border-slate-100 rounded-lg flex items-cemter justify-center ">
@@ -170,9 +170,13 @@
                                         </div>
 
                                         <div *ngIf="trips.trip_status == '7' ">
-                                            <div class="border-2 border-slate-100 rounded-lg flex items-cemter justify-center ">
+                                            <!-- <div class="border-2 border-slate-100 rounded-lg flex items-cemter justify-center ">
                                                 <span class="w-2 h-2 bg-red-500 my-2 mx-1 rounded-full"></span>
                                                 <span class=" my-1 mr-1">Cancelled</span>
+                                            </div> -->
+                                            <div class="border-2 border-slate-100 rounded-lg flex items-cemter justify-center ">
+                                                <span class="w-2 h-2 bg-green-500 my-2 mx-1 rounded-full"></span>
+                                                <span class=" my-1 mr-1">Complete</span>
                                             </div>
                                         </div>
                                         <div *ngIf="trips.trip_status == '' || null || undefined ">

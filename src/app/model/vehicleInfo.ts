@@ -1,33 +1,45 @@
 
 export interface IVehicleType {
-        id: number
+        uuid: string
         vehicle_type: string
-        per_km_rate: number
-        per_minute_rate: number
-        base_fare: number
-        tolls_fees: number
-        minimum_fare: number
-        commission: number
-        tax_percent: number
-        available_seat: number
-        cancel_charge_driver: number
-        cancel_charge_rider: number
-        isactive: number
+        per_km_rate: string
+        per_minute_rate: string
+        base_fare: string
+        tolls_fees: string
+        minimum_fare: string
+        tax_percent: string
+        commission: string
+        cancel_charge_driver: string
+        cancel_charge_rider: string
+        available_seat: string
         description: string
+        is_active: string
         trip_type: string
-        peek_hour_fare: number
+        peek_hour_fare: string
         make: string
         model: string
         year: string
         vehicle_image: any
-        per_km_rate_share: number
-        per_minute_rate_share: number
-        minimum_fare_share: number
-        base_fare_share: number
-        promo_status: number
-        max_fare_value: number
-}
+        per_km_rate_share: string
+        per_minute_rate_share: string
+        minimum_fare_share: string
+        base_fare_share: string
+        promo_status: string
+        max_fare_value: string
+        created_at: string
+        updated_at: string
+      }
 
+      export interface IVehicleMake {
+        id: number
+        uuid: string
+        title: string
+        description: string
+        created_at: string
+        updated_at: string
+      }
+      
+      
 
 export interface addVehicle {
         vehicle_type: string | null;
