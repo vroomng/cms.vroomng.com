@@ -34,7 +34,7 @@ export class SidebarComponent implements OnInit {
     { id: 2, path: '/vehicles-menu', title: 'Vehicles', icon: 'fa-solid fa-truck-monster text-primary', class: '', children: [] },
     { id: 3, path: '/ratings-menu', title: 'Review & Ratings', icon: ' fa-solid fa-handshake text-primary', class: '', children: [] },
     // { id: 4, path: '/activity-log', title: 'Activity log', icon: 'fa-solid fa-car text-primary', class: '', children: [] },
-    { id: 5, path: '/quest-menu', title: 'Quest & Maps', icon: 'fa-solid fa-motorcycle text-primary', class: '', children: [] },
+    { id: 5, path: '/quest-menu', title: 'Maps', icon: 'fa-solid fa-motorcycle text-primary', class: '', children: [] },
     // { id: 6, path: '/access-control', title: 'Access Control', icon: 'fa-solid fa-bus', class: '', children: [] },
     { id: 6, path: '/app-actions-menu', title: 'App Actons', icon: 'fa-solid fa-bus', class: '', children: [] },
 

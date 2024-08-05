@@ -21,7 +21,6 @@ import { VRInputComponent } from '../../components/shared/vr-input/vr-input.comp
 export class CreateBuildComponent implements OnInit {
 
   private baseUrl = environment.serverUrl;
-
   private http = inject(HttpClient);
   isModalVisible: boolean = false;
   inSubmission = false; 

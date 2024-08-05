@@ -120,7 +120,7 @@ export const routes: Routes = [
           path: 'send-notification',      component: SendNotificationComponent,canActivate: [authGuard]
         },
         {
-          path: 'send-sm',      component: SendSmComponent,canActivate: [authGuard]
+          path: 'support/:uuid/reply',      component: SendSmComponent,canActivate: [authGuard]
         },
         
 

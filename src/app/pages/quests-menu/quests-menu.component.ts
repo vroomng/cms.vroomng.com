@@ -21,7 +21,7 @@ export class QuestsMenuComponent {
 
   pages = [
     { id: 1, name: "Maps", },
-    { id: 2, name: "Quests", },
+    // { id: 2, name: "Quests", },
   
 
  ]

@@ -14,19 +14,25 @@
                 <div class="card-body" *ngIf="!inSubmission">   
                     <form [formGroup]="sendSMForm">
                         <div class="flex w-full justify-between h-[auto]">
-                          <div class="w-[49%]">
+                          <div class="w-[90%]">
                             <div class="form-group">
                               <label>message:</label>
                               <app-vr-input [control]="message" placeholder="message"></app-vr-input>
                             </div>
                           </div>
-                          <div class="w-[49%]">
+                          <div class="w-[10%] h-full">
+                            <div class="form-group bg-red-400 flex flex-col items-center justify-center">
+                               
+                            </div>
+                          </div>
+                        </div>
+                          <!-- <div class="w-[49%]">
                             <div class="form-group">
                               <label>Media:</label>
                               <app-vr-input [control]="media" placeholder="Media"></app-vr-input>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                       </form>
             </div>            
             </div>

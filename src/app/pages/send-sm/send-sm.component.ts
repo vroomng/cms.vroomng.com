@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpClientModule,  } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonComponent } from '../../components/shared/button/button.component';
 import { ModalComponent } from '../../components/shared/modal/modal.component';
 import { LoaderComponent } from '../../components/shared/loader/loader.component';
@@ -23,14 +23,16 @@ export class SendSmComponent implements OnInit {
   private http = inject(HttpClient);
   isModalVisible: boolean = false;
   inSubmission = false; 
-  suportUUID: any
+  supportUUID: any
 
   constructor(
-    private router: Router
+    private router: Router, private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.isModalVisible = true;
+    this.supportUUID = this.route.snapshot.paramMap.get('uuid')
+    console.log('support id',this.supportUUID)
   }
 
   message =  new FormControl('',[Validators.required, Validators.minLength(1)]);
@@ -50,12 +52,12 @@ export class SendSmComponent implements OnInit {
    
     this.inSubmission = true
 
-    this.sendSupportMessage(this.sendSMForm.value, this.suportUUID).subscribe({
+    this.sendSupportMessage(this.sendSMForm.value, this.supportUUID).subscribe({
       next: (res: any) => {
         console.log(res);
         this.inSubmission = false
-        alert(res.data.message);
-        this.router.navigate(["/app-actions-menu"])
+        alert('message sent successfully');
+        // this.router.navigate(["/app-actions-menu"])
       },
       error: (err: any) => {
         console.error('error',err);
@@ -66,8 +68,8 @@ export class SendSmComponent implements OnInit {
     
   }
 
-  sendSupportMessage(createBuildForm: any, suportUUID: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/support/send/message/${suportUUID}`, createBuildForm)
+  sendSupportMessage(sendSMForm: any, supportUUID: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/api/support/send/message/${supportUUID}`, sendSMForm)
   }
 
   reset(){

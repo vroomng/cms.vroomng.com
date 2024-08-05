@@ -29,8 +29,12 @@ export class MessageSupportComponent {
   showNoResults:boolean = false;
  moreActions:boolean = false;
 
+
+ isModalVisible: boolean = false;
+
 // variables
   messages!: any;
+  chats!: any;
   displayDialog: boolean = false;
   showLoader = true;
   originalData = this.messages;
@@ -42,11 +46,14 @@ export class MessageSupportComponent {
  @Input() searchText: string = '';
 
  ngOnInit(): void {
+  // this.isModalVisible = true;
   this.getSupportMessages().subscribe({
     next: (res) => {
-      this.messages = res;
+      this.messages = res.data.Supports;
+      this.chats = res.data.Supports.chat;
+      console.log('chat', this.chats)
       this.showLoader = false;
-      console.log('messages',this.messages)
+      console.log('support message',this.messages)
     },
     error: (error) => {
       console.log(error);
@@ -133,12 +140,12 @@ export class MessageSupportComponent {
       FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
     }
 
-    editAdmin(admin: IAdmin):any {
+    editAdmin(admin: any):any {
       this.editedAdmin1 = { ...admin }; // Create a copy to avoid modifying the original data; 
-      this.editedRowId = admin.uuid;
+      this.editedRowId = this.editedAdmin1.uuid;
       // this.displayDialog = true;
       this.selectedUserId = null; 
-      this.isModalVisible = true
+      this.isModalVisible = !this.isModalVisible
     }
 
     toggleDialog(){
@@ -147,7 +154,6 @@ this.isModalVisible = !this.isModalVisible
  }
 
 
-    isModalVisible: boolean = false;
 
     showModal() {
       this.isModalVisible = true;
