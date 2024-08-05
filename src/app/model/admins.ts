@@ -8,17 +8,18 @@ export interface IAdmin {
       ref_code: string
     }
 export interface IQuest {
-      id:number,
-      title: string
-      subTitle: string
-      description: string
-      icon: string
-      type: string
-      points: string
-      target: string
-      starts: string
-      expires: string
-    }
+    uuid: string
+    title: string
+    subTitle: string
+    icon: string
+    type: string
+    points: string
+    target: string
+    starts: string
+    expires: string
+  }
+  
+    
     
     export interface IAccessTrail {
       ID: number

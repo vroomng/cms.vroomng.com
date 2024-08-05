@@ -10,20 +10,18 @@
                         <div class="h-[50%] pt-4 w-full flex flex-wrap">
                             <div class="w-[50%]"  >
                                 <h5>Slug</h5>
-                                <p> {{ editedAdmin1?.slug }}</p>
+                                <p> {{ editedAdmin1?.user_profile.first_name }} {{ editedAdmin1?.user_profile.last_name }} </p>
                             </div>
                             <div class="w-[50%]">
                                 <h5>Version</h5>
-                                <p> {{ editedAdmin1?.version }}</p>
+                                <p> {{ editedAdmin1?.email }}</p>
                             </div>
                             <div class="w-[50%]">
                                 <h5>User Type</h5>
-                                <p> {{ editedAdmin1?.user_type }}</p>
                                 
                             </div>
                             <div class="w-[50%]">
                                 <h5>Device Type</h5>
-                                <p> {{ editedAdmin1?.device_type }}</p>
                                 
                             </div>
                         </div>
@@ -33,8 +31,8 @@
                            <app-button buttonText="Cancel" borderColor="#F1F2F4" bgColor="transparent" (click)="toggleDialog()"></app-button>
                        </div>
                        <div class="btn w-[48%]">
-                        <a routerLink="/builds/{{editedAdmin1?.id}}/edit" class="hover:text-brand900">
-                          <app-button buttonText="CHange Build" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF"></app-button>
+                        <a routerLink="/users/{{editedAdmin1?.id}}/edit" class="hover:text-brand900">
+                          <app-button buttonText="Edit Admin" borderColor="#28094F" bgColor="#28094F" textColor="#FFFFFF"></app-button>
                         </a>   
                     </div>
                     </div>
@@ -60,14 +58,13 @@
                         >
                             <ng-template pTemplate="header">
                                 <tr style="height: 3rem; border-color: #FAFAF9; border-top-width: 0.2px; border-bottom-width:0.2px ;">
-                                    <th class="w-[25%] capitalize" >Slug</th>
-                                    <th class="w-[25%] capitalize" >Version</th>
-                                    <th class="w-[20%] capitalize" >User Type</th>
-                                    <th class="w-[20%] capitalize" >Device Type</th>             
-                                    <th class="w-[10%] capitalize" >Action</th>             
+                                    <th >Slug</th>
+                                    <th>Version</th>
+                                    <th>User Type</th>
+                                    <th>Device Type</th>             
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-builds>
+                            <ng-template pTemplate="body" let-admins>
                                 <tr style="height: 3rem; border-color: #abb4ce80; border-top-width: 0.2px; border-bottom-width:0.2px ">
                                 
                                     <td>
@@ -86,24 +83,24 @@
                                     <td class="action flex justify-between">
                                         <span class="edit">
                                             <div class="flex align-items-center justify-content-center gap-2">
-                                               <span (click)="userAction(builds.uuid)">
+                                               <span (click)="userAction(admins.uuid)">
                                                 <button pButton pRipple type="button" icon="fa-solid fa-ellipsis-vertical" class="p-button-rounded p-button-text"></button>
                                                </span>
                                             </div>
                                         </span>
                                     </td> 
                                 </tr>
-                                <div class="z-[9999] card  w-36 h-36 ml-[60rem] bg-white drop-shadow-xl absolute" *ngIf="selectedUserId === builds.uuid">
+                                <div class="z-[9999] card  w-36 h-36 ml-[60rem] bg-white drop-shadow-xl absolute" *ngIf="selectedUserId === admins.uuid">
                                     <div class="h-[33%] bg-[#FAFAF9] rounded-t-md flex items-center justify-center red-400">
                                         <p class="font-medium">More Actions</p>
                                     </div>
                                     <div class="h-[32%] flex items-center border-y-[0.5px] border-[#EEECF6] justify-center ">
-                                        <span class="text-brand900 cursor-pointer hover:font-bold" (click)="editAdmin(builds)" >
+                                        <span class="text-brand900 cursor-pointer hover:font-bold" (click)="editAdmin(admins)" >
                                             <span class="hover:font-medium">View Build</span> 
                                         </span>
                                     </div>
                                     <div class="h-[32%] flex items-center justify-center">
-                                        <a routerLink="/users/{{builds.uuid}}/edit" class="hover:text-brand900">
+                                        <a routerLink="/users/{{admins.uuid}}/edit" class="hover:text-brand900">
                                            <span class="hover:font-medium">Edit Build</span> 
                                         </a>
                                     </div>

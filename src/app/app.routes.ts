@@ -22,6 +22,11 @@ import { AppActionsComponent } from './pages/app-actions/app-actions.component';
 import { VehiclesAddComponent } from './pages/vehicles-add/vehicles-add.component';
 import { VehicleMakeAddComponent } from './pages/vehicle-make-add/vehicle-make-add.component';
 import { VehicleEditComponent } from './pages/vehicle-edit/vehicle-edit.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { AddQuestLocationComponent } from './pages/add-quest-location/add-quest-location.component';
+import { CreateBuildComponent } from './pages/create-build/create-build.component';
+import { SendNotificationComponent } from './pages/send-notification/send-notification.component';
+import { SendSmComponent } from './pages/send-sm/send-sm.component';
 
 export const routes: Routes = [
     {
@@ -93,15 +98,31 @@ export const routes: Routes = [
           canActivate: [authGuard]
         },
         {
-          path: 'add-vehicle-type',      component: VehiclesAddComponent,
+          path: 'add-vehicle-type',      component: VehiclesAddComponent,canActivate: [authGuard]
         },
         {
-          path: 'add-vehicle-make',      component: VehicleMakeAddComponent,
+          path: 'add-vehicle-make',      component: VehicleMakeAddComponent,canActivate: [authGuard]
         },
 
         {
-          path: 'vehicleUpdate/:uuid/edit',      component: VehicleEditComponent,
+          path: 'vehicleUpdate/:uuid/edit',      component: VehicleEditComponent,canActivate: [authGuard]
         },
+        {
+          path: 'user-profile',      component: UserProfileComponent,canActivate: [authGuard]
+        },
+        {
+          path: 'quest/:uuid/addLocation',      component: AddQuestLocationComponent,canActivate: [authGuard]
+        },
+        {
+          path: 'create-build',      component: CreateBuildComponent,canActivate: [authGuard]
+        },
+        {
+          path: 'send-notification',      component: SendNotificationComponent,canActivate: [authGuard]
+        },
+        {
+          path: 'send-sm',      component: SendSmComponent,canActivate: [authGuard]
+        },
+        
 
 
 

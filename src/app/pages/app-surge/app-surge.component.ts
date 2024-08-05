@@ -1,5 +1,5 @@
 // Dependecies
-import { Component, OnInit,Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit,Input, inject,  } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { IAdmin } from '../../model/admins';
 import * as FileSaver from 'file-saver';
@@ -13,63 +13,52 @@ import { Button, ButtonModule } from 'primeng/button';
 import { ModalComponent } from '../../components/shared/modal/modal.component';
 import { LoaderComponent } from '../../components/shared/loader/loader.component';
 
-// Decorator and file connector
+
 @Component({
-  selector: 'app-admin-view',
-  templateUrl: './admin-view.component.html',
-  styleUrls: ['./admin-view.component.scss'],
+  selector: 'app-app-surge',
   standalone: true,
-  imports : [
-    HttpClientModule, TableModule, CommonModule, RouterLink , ButtonComponent,ButtonModule, Button, ModalComponent, LoaderComponent],
-  providers: [DatePipe],
+  imports : [ HttpClientModule, TableModule, CommonModule, RouterLink , ButtonComponent,ButtonModule, Button, ModalComponent, LoaderComponent],
+  templateUrl: './app-surge.component.html',
+  styleUrl: './app-surge.component.scss'
 })
-
-export class AdminViewComponent implements OnInit {
-
-  private baseUrl = environment.serverUrl;
+export class AppSurgeComponent {private baseUrl = environment.serverUrl;
 
   private http = inject(HttpClient);
-  
- @Input() searchText: string = '';
- showNoResults:boolean = false;
+
+  showNoResults:boolean = false;
  moreActions:boolean = false;
 
 // variables
-  admins!: any;
+  builds!: any;
   displayDialog: boolean = false;
   showLoader = true;
-  originalData = this.admins;
+  originalData = this.builds;
   selectedUserId:any = null;
   userDetails:any
   editedAdmin1: IAdmin | any;
   editedRowId: number | null = null;
-  //  lifecycle and constructor
-  constructor(
-    // private users: UsersService,
-    private datePipe: DatePipe,
-    // private messageService: MessageService
-  ){}
-  ngOnInit(): void {
-    this.getAdmins().subscribe(
-    (res:any)=> {
-      console.log(res)
-      this.admins = res.data.admins.data
-      console.log('response',res.data.admins.data)
-      this.showLoader = false;
-    }
-    )
-    const storedUserDetails = localStorage.getItem('userDetails');
-    console.log(storedUserDetails);
-    if (storedUserDetails) {
-      this.userDetails = JSON.parse(storedUserDetails);
-
-    } else {
-      console.log('User details not found in localStorage.');
-    }
   
-    // this.accessTrail()
+ @Input() searchText: string = '';
+
+ ngOnInit(): void {
+  this.getAppBuild().subscribe({
+    next: (res) => {
+      this.builds = res;
+      this.showLoader = false;
+      console.log(this.builds)
+    },
+    error: (error) => {
+      console.log(error);
+    },
   }
- 
+    
+    )
+ }
+
+ getAppBuild(): Observable<any> {
+   return this.http.get<any>(`${this.baseUrl}/api/admin/app/builds`);
+ }
+
   userAction(userId: any) {
     if (this.selectedUserId === userId) {
         this.selectedUserId = null; // Hide the card actions if the same user is clicked again
@@ -81,16 +70,16 @@ export class AdminViewComponent implements OnInit {
   applyFilter() {
     const inputField = this.searchText.trim();
     if(inputField === ''){
-      this.getAdmins().subscribe(
+      this.getAppBuild().subscribe(
         (res:any)=> {
-          this.admins = res.data
+          this.builds = res.data
           this.showLoader = false;
           // this.showNoResults = false;
          })
-        this.admins = this.originalData
+        this.builds = this.originalData
         // this.showNoResults = true
     }
-    const filteredAdmins = this.admins.filter((admin:any) => {
+    const filteredAdmins = this.builds.filter((admin:any) => {
       // Adjust the conditions based on your filtering requirements
       return (
         admin.firstname.toLowerCase().includes(this.searchText.toLowerCase()) ||
@@ -100,7 +89,7 @@ export class AdminViewComponent implements OnInit {
         admin.user_type.toString().includes(this.searchText)
       );
     });
-    this.admins = filteredAdmins;
+    this.builds = filteredAdmins;
     // Check if there are any results
         if (filteredAdmins.length  === 0) {
           setTimeout(() => {
@@ -116,18 +105,18 @@ export class AdminViewComponent implements OnInit {
  
   clear() {
     this.searchText = '';
-    this.getAdmins().subscribe(
+    this.getAppBuild().subscribe(
       (res:any)=> {
-        this.admins = res.data
+        this.builds = res.data
         this.showLoader = false;
       }
       )
-      this.admins = this.originalData
+      this.builds = this.originalData
   }
 
     exportExcel() {
         import('xlsx').then((xlsx) => {
-            const worksheet = xlsx.utils.json_to_sheet(this.admins);
+            const worksheet = xlsx.utils.json_to_sheet(this.builds);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
             const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
             this.saveAsExcelFile(excelBuffer, 'admins');
@@ -156,9 +145,6 @@ export class AdminViewComponent implements OnInit {
 this.isModalVisible = !this.isModalVisible 
  }
 
-    getAdmins(): Observable<IAdmin[]>{
-      return this.http.get<IAdmin[]>(`${this.baseUrl}/api/admin/admins`);
-    }
 
     isModalVisible: boolean = false;
 
@@ -170,11 +156,6 @@ this.isModalVisible = !this.isModalVisible
       this.isModalVisible = false;
     }
   
-    onFileSelected(event: any) {
-      const file: File = event.target.files[0];
-      // this.licence_docu.setValue(file); // Update the form control with the selected file
-    }
 
-    
 
 }
